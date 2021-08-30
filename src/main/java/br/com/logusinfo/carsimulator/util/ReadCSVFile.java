@@ -7,9 +7,8 @@ import java.util.Scanner;
 public class ReadCSVFile {
 	
 	private static String[] values;
-	private String file;
-	
-	public ReadCSVFile() throws FileNotFoundException {
+
+	public ReadCSVFile(String file) throws FileNotFoundException {
 		try(Scanner scanner = new Scanner(new File("resoures", file))) {
 			scanner.nextLine();
 			while(scanner.hasNextLine()) {
@@ -18,7 +17,7 @@ public class ReadCSVFile {
 		}
 	}
 	
-	public static String[] getValues(String file) {
+	public String[] getValues() {
 		return values;
 	}
 
