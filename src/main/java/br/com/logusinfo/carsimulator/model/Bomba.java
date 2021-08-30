@@ -11,6 +11,7 @@ public class Bomba {
 	private boolean abastecendo;
 	private Veiculo veiculo;
 	private int tempoAbastecimento;
+	private int totalTempoAbastecimento;
 	
 	public Bomba(Combustivel combustivel, int velocidade) {
 		this.combustivel = combustivel;
@@ -35,6 +36,7 @@ public class Bomba {
 		setVeiculo(veiculo);
 		int capacidade = this.veiculo.getModelo().getCapacidadeTanque();
 		tempoAbastecimento += capacidade/velocidadeBomba;
+		totalTempoAbastecimento += tempoAbastecimento;
 		totalAbastecido += capacidade;
 		totalVeiculos++;
 		return 	 " Veículo modelo " 
@@ -75,5 +77,9 @@ public class Bomba {
 
 	public int getTotalVeiculos() {
 		return this.totalVeiculos;
+	}
+
+	public int getTotalTempoAbastecimento() {
+		return this.totalTempoAbastecimento;
 	}
 }

@@ -13,7 +13,7 @@ public class PostoCombustivel {
 	private Queue<Veiculo> veiculos;
 	private Bomba[] bombas;
 	private int size;
-	private final int totalSeconds = 0;
+	private int totalSeconds = 0;
 
 	public PostoCombustivel(List<Veiculo> veiculos, Bomba... bombas) {
 		this.veiculos = new ArrayDeque<>(veiculos);
@@ -36,10 +36,11 @@ public class PostoCombustivel {
 		for (Bomba bomba : bombas) {
 			System.out.printf("Total abastecido na bomba (%s): %d litros \n", bomba.getCombustivel(), bomba.getTotalAbastecido());
 			System.out.println("\tTotal de veículos: " + bomba.getTotalVeiculos());
-			System.out.println("\tTotal de tempo: " + bomba.getTempoAbastecimento());
+			System.out.println("\tTotal de tempo: " + bomba.getTotalTempoAbastecimento());
 
 			System.out.println();
 		}
+		System.out.println("Tempo total de funcionamento (segundos): " + this.totalSeconds);
 	}
 
 
@@ -50,7 +51,12 @@ public class PostoCombustivel {
 			if (! bomba.isAbastecendo()) {
 				Veiculo veiculo = proximoVeiculo(bomba.getCombustivel());
 				if (veiculo != null){
-					System.out.println(bomba.abasteceCarro(veiculo));
+					String relatorioBomba = bomba.abasteceCarro(veiculo);
+					if (this.totalSeconds < bomba.getTotalTempoAbastecimento()) {
+						this.totalSeconds = bomba.getTotalTempoAbastecimento();
+					}
+					System.out.println("["+segundosEmFormatoHora(totalSeconds)+"]"+relatorioBomba);
+
 					size --;
 					break;
 				}
@@ -69,6 +75,12 @@ public class PostoCombustivel {
 	
 	public int getSize() {
 		return size;
+	}
+
+	private String segundosEmFormatoHora(int total) {
+		int minutos = total / 60;
+		int segundos = total % 60;
+		return String.format("%02d:%02d",minutos,segundos);
 	}
 
 }
